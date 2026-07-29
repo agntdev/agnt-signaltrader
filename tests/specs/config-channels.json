@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Configure Channels",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Add or remove monitored Telegram channels"
+            }
+          }
+        ],
+        "send": {
+          "callback": "config:channels"
+        }
+      }
+    ]
+  }
+]
