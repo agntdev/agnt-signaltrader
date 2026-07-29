@@ -5,9 +5,9 @@
       {
         "expect": [
           {
-            "method": "sendMessage",
+            "method": "editMessageText",
             "payload": {
-              "text": "Add or remove monitored Telegram channels"
+              "text": "No channels are monitored yet — tap Add channel to set one up."
             }
           }
         ],

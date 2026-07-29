@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Parsing rules open from the main menu",
+    "steps": [
+      {
+        "send": { "callback": "config:rules" },
+        "expect": [{ "method": "editMessageText", "payload": { "text": "Signals use: SYMBOL BUY or SELL SIZE, with optional SL, TP, and EXPIRY.\n\nAllowed symbols: all symbols." } }]
+      }
+    ]
+  }
+]

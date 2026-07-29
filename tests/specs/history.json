@@ -7,7 +7,7 @@
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Show execution history and logs"
+              "text": "No executions yet — configured signals will appear here."
             }
           }
         ],
