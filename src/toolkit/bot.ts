@@ -6,6 +6,7 @@ import {
   type StorageAdapter,
 } from "grammy";
 import { resolveSessionStorage } from "./session/redis.js";
+import { createDomainStore, type DomainStore } from "./domain-store.js";
 import {
   installActivityReporter,
   type ReporterOptions,
@@ -13,7 +14,8 @@ import {
 } from "./telemetry/reporter.js";
 
 /** Context for a toolkit bot carrying a typed session `S`. */
-export type BotContext<S extends object = Record<string, unknown>> = Context & SessionFlavor<S>;
+export type BotContext<S extends object = Record<string, unknown>> = Context &
+  SessionFlavor<S> & { store: DomainStore };
 
 export interface CreateBotOptions<S extends object> {
   /** Initial session value for a new chat. */
@@ -46,13 +48,19 @@ export function createBot<S extends object>(
   opts: CreateBotOptions<S>,
 ): Bot<BotContext<S>> {
   const bot = new Bot<BotContext<S>>(token);
+  const storage = resolveSessionStorage<S>(opts.storage);
   bot.use(
     session<S, BotContext<S>>({
       initial: opts.initial,
       // Auto-select: explicit adapter → Redis (REDIS_URL) → in-memory.
-      storage: resolveSessionStorage<S>(opts.storage),
+      storage,
     }),
   );
+  const domainStore = createDomainStore(storage as StorageAdapter<unknown>);
+  bot.use((ctx, next) => {
+    ctx.store = domainStore;
+    return next();
+  });
   // Active-user reporting (agnt-api migration 00069). No-op unless the platform
   // injected BOT_TELEMETRY_* at deploy — so dev, the test harness, and old bots
   // are byte-for-byte unchanged. Records salted user hashes only; best-effort.

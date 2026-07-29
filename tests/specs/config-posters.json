@@ -5,9 +5,9 @@
       {
         "expect": [
           {
-            "method": "sendMessage",
+            "method": "editMessageText",
             "payload": {
-              "text": "Add/remove approved signal posters"
+              "text": "No approved posters yet — tap Approve poster to add one."
             }
           }
         ],

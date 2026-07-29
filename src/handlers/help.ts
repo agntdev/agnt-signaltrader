@@ -9,8 +9,9 @@ import { inlineButton, inlineKeyboard } from "../toolkit/index.js";
 const composer = new Composer<Ctx>();
 
 const HELP =
-  "ℹ️ Tap /start to open the menu, then pick what you want from the buttons.\n\n" +
-  "Everything in this bot is reachable by tapping — you don't need to remember any commands.";
+  "Use the menu to manage monitored channels, approved posters, parsing rules, and execution history.\n\n" +
+  "Use /history for a quick execution log.\n\n" +
+  "Send signals as: EURUSD BUY 0.10 SL 1.0800 TP 1.0900.";
 
 const backToMenu = inlineKeyboard([[inlineButton("⬅️ Back to menu", "menu:main")]]);
 
